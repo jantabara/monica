@@ -135,12 +135,13 @@ const destroy = () => {
             {{ role.label }}
           </p>
 
-          <div v-if="role.contacts.length > 0" class="grid grid-cols-3 gap-x-12 gap-y-6 sm:grid-cols-4">
+          <div v-if="role.contacts.length > 0" class="grid grid-cols-4 gap-x-4 gap-y-4 sm:grid-cols-2">
             <div
               v-for="contact in role.contacts"
               :key="contact.id"
+              style="display: flex"
               class="rounded-lg border border-gray-200 bg-white p-3 text-center hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-slate-800">
-              <avatar :data="contact.avatar" :class="'inline-block h-14 w-14 rounded-full'" />
+              <avatar :data="contact.avatar" :class="'inline-block h-14 w-14 rounded-full mr-4'" />
 
               <Link :href="contact.url" class="text-blue-500 hover:underline">{{ contact.name }}</Link>
 

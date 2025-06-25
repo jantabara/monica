@@ -29,7 +29,10 @@ defineProps({
               <div v-if="company.contacts" class="relative flex -space-x-2 overflow-hidden py-1">
                 <div v-for="contact in company.contacts" :key="contact.id" class="inline-block">
                   <Link :href="contact.url.show">
-                    <avatar :data="contact.avatar" :class="'h-8 w-8 rounded-full ring-2 ring-white'" />
+                    <avatar
+                      :first-name="contact.first_name"
+                      :data="contact.avatar"
+                      :class="'h-8 w-8 rounded-full ring-2 ring-white'" />
                   </Link>
                 </div>
               </div>

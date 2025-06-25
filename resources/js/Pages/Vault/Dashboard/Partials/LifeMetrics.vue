@@ -3,7 +3,6 @@ import { ref, nextTick } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { trans } from 'laravel-vue-i18n';
 import { flash } from '@/methods.js';
-import { Tooltip as ATooltip } from 'ant-design-vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
@@ -24,7 +23,7 @@ const labelField = ref(null);
 const loadingState = ref('');
 const localLifeMetrics = ref(props.data.data);
 const editedLifeMetricId = ref(0);
-const graphLifeMetricId = ref(0);
+// const graphLifeMetricId = ref(0);
 
 const showCreateLifeMetricModal = () => {
   createLifeMetricModalShown.value = true;
@@ -38,14 +37,14 @@ const showEditLifeMetricModal = (lifeMetric) => {
   form.label = lifeMetric.label;
 };
 
-const showLifeMetricGraph = (lifeMetric) => {
-  graphLifeMetricId.value = lifeMetric.id;
-};
+// const showLifeMetricGraph = (lifeMetric) => {
+//   graphLifeMetricId.value = lifeMetric.id;
+// };
 
-const toggleGraph = (lifeMetric) => {
-  let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
-  localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
-};
+// const toggleGraph = (lifeMetric) => {
+//   let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
+//   localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
+// };
 
 const store = () => {
   loadingState.value = 'loading';
@@ -63,20 +62,20 @@ const store = () => {
     });
 };
 
-const increment = (lifeMetric) => {
-  loadingState.value = 'loading';
+// const increment = (lifeMetric) => {
+//   loadingState.value = 'loading';
 
-  axios
-    .post(lifeMetric.url.store, form)
-    .then((response) => {
-      loadingState.value = '';
-      localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)] = response.data.data;
-      localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)].incremented = true;
-    })
-    .catch(() => {
-      loadingState.value = '';
-    });
-};
+//   axios
+//     .post(lifeMetric.url.store, form)
+//     .then((response) => {
+//       loadingState.value = '';
+//       localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)] = response.data.data;
+//       localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)].incremented = true;
+//     })
+//     .catch(() => {
+//       loadingState.value = '';
+//     });
+// };
 
 const update = (lifeMetric) => {
   loadingState.value = 'loading';
@@ -125,7 +124,7 @@ const destroy = (lifeMetric) => {
         @click="showCreateLifeMetricModal" />
     </div>
 
-    <!-- modal to create a quick fact -->
+    <!-- modal to create a metric -->
     <form
       v-if="createLifeMetricModalShown"
       class="mb-2 mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
@@ -166,8 +165,8 @@ const destroy = (lifeMetric) => {
             <div class="me-8 flex w-full items-center justify-between">
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
-                <ul @click="toggleGraph(lifeMetric)">
-                  <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
+                <!-- <button @click="toggleGraph(lifeMetric)"> -->
+                <!-- <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
                     {{ $t('Total:') }}
 
                     <a-tooltip placement="bottomLeft" :title="$t('Events this week')" arrow-point-at-center>
@@ -190,16 +189,25 @@ const destroy = (lifeMetric) => {
                         >{{ lifeMetric.stats.yearly_events }}</span
                       >
                     </a-tooltip>
-                  </li>
-                </ul>
+                  </li> -->
+                <!-- </button> -->
               </div>
 
-              <pretty-button
+              <text-input
+                :model-value="lifeMetric.total"
+                :type="'number'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false" />
+
+              <!-- <pretty-button
                 v-if="!lifeMetric.incremented"
                 :text="'+ 1'"
                 :class="'w-full px-8 py-4 sm:w-fit'"
-                @click="increment(lifeMetric)" />
-              <span v-else class="w-full px-3 py-4 text-xl sm:w-fit">🤭</span>
+                @click="increment(lifeMetric)"
+              /> -->
+              <!-- <span v-else class="w-full px-3 py-4 text-xl sm:w-fit">🤭</span> -->
             </div>
 
             <!-- menu -->
@@ -236,16 +244,14 @@ const destroy = (lifeMetric) => {
               <errors :errors="form.errors" />
 
               <text-input
-                ref="labelField"
                 v-model="form.label"
                 :label="$t('Name')"
-                :type="'text'"
+                :type="'number'"
                 :autofocus="true"
                 :input-class="'block w-full'"
                 :required="true"
                 :autocomplete="false"
-                :maxlength="255"
-                @esc-key-pressed="editedLifeMetricId = 0" />
+                :maxlength="255" />
             </div>
 
             <div class="flex justify-between p-5">

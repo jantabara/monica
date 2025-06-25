@@ -72,6 +72,7 @@ class VaultLifeMetricsViewHelper
             'incremented' => false,
             'show_graph' => false,
             'label' => $lifeMetric->label,
+            'total' => $contact->lifeMetrics()->where('life_metric_id', $lifeMetric->id)->count(),
             'stats' => self::stats($lifeMetric, $contact),
             'years' => self::years($lifeMetric, $contact),
             'months' => $eventsInMonthCollection,

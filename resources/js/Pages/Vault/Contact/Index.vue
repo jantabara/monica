@@ -49,12 +49,12 @@ const update = () => {
                 <li v-for="label in data.labels" :key="label.id" class="mb-1">
                   <div v-if="label.id !== data.current_label">
                     <Link :href="label.url.show" class="text-blue-500 hover:underline">
-                      {{ label.name }}
-                    </Link>
+                      {{ label.name }} </Link
+                    >&nbsp;
                     <span class="text-sm text-gray-500">({{ label.count }})</span>
                   </div>
                   <div v-if="label.id === data.current_label">
-                    {{ label.name }} <span class="text-sm text-gray-500">({{ label.count }})</span>
+                    {{ label.name }}<span class="text-sm text-gray-500">({{ label.count }})</span>
                   </div>
                 </li>
               </ul>
