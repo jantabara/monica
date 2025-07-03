@@ -364,7 +364,7 @@ const destroy = () => {
                   {{ address.line_1 }}
                 </p>
                 <p v-if="address.line_2">{{ address.line_2 }}</p>
-                <p v-if="address.postal_code || address.city">{{ address.postal_code }} {{ address.city }}</p>
+                <p v-if="address.postal_code || address.city">{{ address.postal_code }}, {{ address.city }}</p>
                 <p v-if="address.country">
                   {{ address.country }}
                 </p>

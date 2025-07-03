@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <avatar :data="data.avatar" :class="'mx-auto mb-6 w-32 sm:w-1/2'" :img-classes="'rounded-xs sm:w-72'" />
-  </div>
+  <avatar :data="data.avatar" :class="'mx-auto mb-6 w-32 sm:w-1/2'" :img-classes="'rounded-xs sm:w-72'" />
 </template>
 
 <script>

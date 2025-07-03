@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { VMap, VMapMarker, VMapPinIcon, VMapOsmTileLayer } from 'vue-map-ui';
 import Layout from '@/Layouts/Layout.vue';
+import Avatar from '@/Shared/Avatar.vue';
 defineProps({
   layoutData: Object,
   data: Object,
@@ -45,10 +46,13 @@ const editedContact = ref(undefined);
 
                 <div class="flex h-full flex-col overflow-y-auto bg-white py-6 shadow-xl">
                   <div class="px-4 sm:px-6">
-                    <h2 class="text-base font-semibold text-gray-900" id="drawer-title">Panel title</h2>
+                    <h2 class="text-base font-semibold text-gray-900" id="drawer-title">{{ editedContact.name }}</h2>
                   </div>
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                    {{ data }}
+                    {{ editedContact.addresses[0].line_1 }}
+                  </div>
+                  <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                    {{ editedContact }}
                   </div>
                 </div>
               </div>
@@ -62,14 +66,11 @@ const editedContact = ref(undefined);
         <VMapMarker
           v-for="contact in data.contacts"
           @click="editedContact = contact"
-          :latlng="[(48.5 + Math.random() * 2).toFixed(6), (13 + Math.random() * 5).toFixed(6)]"
+          :latlng="[contact.addresses[0].latitude, contact.addresses[0].longitude]"
           :title="contact.name"
           :key="contact.id">
-          <VMapPinIcon color="green">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              <path
-                d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
-            </svg>
+          <VMapPinIcon color="#101828">
+            <Avatar :data="contact.avatar" img-classes="relative h-5.5 w-5.5 rounded-full" />
           </VMapPinIcon>
         </VMapMarker>
       </VMap>

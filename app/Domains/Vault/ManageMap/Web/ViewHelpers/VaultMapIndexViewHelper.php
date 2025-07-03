@@ -9,7 +9,19 @@ class VaultMapIndexViewHelper
 {
     public static function data(Vault $vault, User $user): array
     {
-        $contacts = $vault->contacts()->where('listed', true)->get();
+        $contacts = $vault->contacts()
+            ->where('listed', true)
+            ->whereHas('addresses', function ($query) {
+                $query->where('address_type_id', 1);
+                $query->whereNotNull('latitude');
+                $query->whereNotNull('longitude');
+            })
+            ->with(['addresses' => function ($query) {
+                $query->where('address_type_id', 1);
+                $query->whereNotNull('latitude');
+                $query->whereNotNull('longitude');
+            }])
+            ->get();
 
         $contactCollection = collect();
 
@@ -17,7 +29,8 @@ class VaultMapIndexViewHelper
             $contactCollection->push([
                 'id' => $contact->id,
                 'name' => $contact->name,
-                // 'avatar' => $contact->avatar,
+                'addresses' => $contact->addresses,
+                'avatar' => $contact->avatar,
                 // 'url' => [
                 //   'show' => route('contact.show', [
                 //     'vault' => $vault->id,
