@@ -3,6 +3,7 @@ import { ref, nextTick } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { trans } from 'laravel-vue-i18n';
 import { flash } from '@/methods.js';
+import { Tooltip as ATooltip } from 'ant-design-vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
@@ -14,8 +15,9 @@ const props = defineProps({
   data: Object,
 });
 
-const form = useForm({
+const editForm = useForm({
   label: '',
+  value: '',
 });
 
 const createLifeMetricModalShown = ref(false);
@@ -23,34 +25,34 @@ const labelField = ref(null);
 const loadingState = ref('');
 const localLifeMetrics = ref(props.data.data);
 const editedLifeMetricId = ref(0);
-// const graphLifeMetricId = ref(0);
+const graphLifeMetricId = ref(0);
 
 const showCreateLifeMetricModal = () => {
   createLifeMetricModalShown.value = true;
-  form.label = '';
+  editForm.label = '';
 
   nextTick().then(() => labelField.value.focus());
 };
 
 const showEditLifeMetricModal = (lifeMetric) => {
   editedLifeMetricId.value = lifeMetric.id;
-  form.label = lifeMetric.label;
+  editForm.label = lifeMetric.label;
 };
 
-// const showLifeMetricGraph = (lifeMetric) => {
-//   graphLifeMetricId.value = lifeMetric.id;
-// };
+const showLifeMetricGraph = (lifeMetric) => {
+  graphLifeMetricId.value = lifeMetric.id;
+};
 
-// const toggleGraph = (lifeMetric) => {
-//   let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
-//   localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
-// };
+const toggleGraph = (lifeMetric) => {
+  let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
+  localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
+};
 
 const store = () => {
   loadingState.value = 'loading';
 
   axios
-    .post(props.data.url.store, form)
+    .post(props.data.url.store, editForm)
     .then((response) => {
       flash(trans('The life metric has been created'), 'success');
       loadingState.value = '';
@@ -62,26 +64,11 @@ const store = () => {
     });
 };
 
-// const increment = (lifeMetric) => {
-//   loadingState.value = 'loading';
-
-//   axios
-//     .post(lifeMetric.url.store, form)
-//     .then((response) => {
-//       loadingState.value = '';
-//       localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)] = response.data.data;
-//       localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)].incremented = true;
-//     })
-//     .catch(() => {
-//       loadingState.value = '';
-//     });
-// };
-
 const update = (lifeMetric) => {
   loadingState.value = 'loading';
 
   axios
-    .put(lifeMetric.url.update, form)
+    .put(lifeMetric.url.update, editForm)
     .then((response) => {
       flash(trans('The life metric has been updated'), 'success');
       loadingState.value = '';
@@ -124,17 +111,17 @@ const destroy = (lifeMetric) => {
         @click="showCreateLifeMetricModal" />
     </div>
 
-    <!-- modal to create a metric -->
+    <!-- modal to create a quick fact -->
     <form
       v-if="createLifeMetricModalShown"
       class="mb-2 mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="store()">
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-        <errors :errors="form.errors" />
+        <errors :errors="editForm.errors" />
 
         <text-input
           ref="labelField"
-          v-model="form.label"
+          v-model="editForm.label"
           :label="$t('Name')"
           :type="'text'"
           :autofocus="true"
@@ -165,8 +152,8 @@ const destroy = (lifeMetric) => {
             <div class="me-8 flex w-full items-center justify-between">
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
-                <!-- <button @click="toggleGraph(lifeMetric)"> -->
-                <!-- <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
+                <ul @click="toggleGraph(lifeMetric)">
+                  <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
                     {{ $t('Total:') }}
 
                     <a-tooltip placement="bottomLeft" :title="$t('Events this week')" arrow-point-at-center>
@@ -189,25 +176,18 @@ const destroy = (lifeMetric) => {
                         >{{ lifeMetric.stats.yearly_events }}</span
                       >
                     </a-tooltip>
-                  </li> -->
-                <!-- </button> -->
+                  </li>
+                </ul>
               </div>
 
-              <text-input
-                :model-value="lifeMetric.total"
-                :type="'number'"
-                :autofocus="true"
-                :input-class="'block w-full'"
-                :required="true"
-                :autocomplete="false" />
+              <pretty-button :text="$t('Record data')" @click="showEditLifeMetricModal(lifeMetric)" />
 
               <!-- <pretty-button
                 v-if="!lifeMetric.incremented"
                 :text="'+ 1'"
                 :class="'w-full px-8 py-4 sm:w-fit'"
-                @click="increment(lifeMetric)"
-              /> -->
-              <!-- <span v-else class="w-full px-3 py-4 text-xl sm:w-fit">🤭</span> -->
+                @click="increment(lifeMetric)" />
+              <span v-else class="w-full px-3 py-4 text-xl sm:w-fit">🤭</span> -->
             </div>
 
             <!-- menu -->
@@ -241,17 +221,32 @@ const destroy = (lifeMetric) => {
             class="bg-white dark:border-gray-700 dark:bg-gray-900"
             @submit.prevent="update(lifeMetric)">
             <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-              <errors :errors="form.errors" />
+              <errors :errors="editForm.errors" />
 
               <text-input
-                v-model="form.label"
+                ref="labelField"
+                v-model="editForm.label"
                 :label="$t('Name')"
-                :type="'number'"
+                :type="'text'"
                 :autofocus="true"
                 :input-class="'block w-full'"
                 :required="true"
                 :autocomplete="false"
-                :maxlength="255" />
+                :maxlength="255"
+                @esc-key-pressed="editedLifeMetricId = 0" />
+
+              <text-input
+                class="mt-2"
+                ref="labelField"
+                v-model="editForm.value"
+                :label="$t('Value')"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-60'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="editedLifeMetricId = 0" />
             </div>
 
             <div class="flex justify-between p-5">
