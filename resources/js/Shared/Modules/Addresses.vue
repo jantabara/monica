@@ -45,13 +45,13 @@ const form = useForm({
 const showCreateAddressModal = () => {
   form.errors = [];
   form.is_past_address = false;
-  form.address_type_id = 0;
+  form.address_type_id = 1;
   form.line_1 = '';
   form.line_2 = '';
   form.city = '';
   form.province = '';
   form.postal_code = '';
-  form.country = '';
+  form.country = 'Czech Republic';
   createAddressModalShown.value = true;
 };
 
@@ -255,7 +255,6 @@ const destroy = () => {
               v-model="form.line_1"
               :label="$t('Address')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
@@ -270,7 +269,6 @@ const destroy = () => {
               v-model="form.line_2"
               :label="$t('Apartment, suite, etc…')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
@@ -281,7 +279,6 @@ const destroy = () => {
               v-model="form.city"
               :label="$t('City')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full'"
               :required="false"
               :autocomplete="false"
@@ -295,7 +292,6 @@ const destroy = () => {
               v-model="form.province"
               :label="$t('Province')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
@@ -306,7 +302,6 @@ const destroy = () => {
               v-model="form.postal_code"
               :label="$t('Postal code')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full'"
               :required="false"
               :autocomplete="false"
@@ -317,7 +312,6 @@ const destroy = () => {
               v-model="form.country"
               :label="$t('Country')"
               :type="'text'"
-              :autofocus="true"
               :input-class="'w-full'"
               :required="false"
               :autocomplete="false"
@@ -416,7 +410,6 @@ const destroy = () => {
                   v-model="form.line_1"
                   :label="$t('Address')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -431,7 +424,6 @@ const destroy = () => {
                   v-model="form.line_2"
                   :label="$t('Apartment, suite, etc…')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -442,7 +434,6 @@ const destroy = () => {
                   v-model="form.city"
                   :label="$t('City')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"
@@ -456,7 +447,6 @@ const destroy = () => {
                   v-model="form.province"
                   :label="$t('Province')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -467,7 +457,6 @@ const destroy = () => {
                   v-model="form.postal_code"
                   :label="$t('Postal code')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"
@@ -478,7 +467,6 @@ const destroy = () => {
                   v-model="form.country"
                   :label="$t('Country')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"
@@ -597,7 +585,6 @@ const destroy = () => {
                   v-model="form.line_1"
                   :label="$t('Address')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -612,7 +599,6 @@ const destroy = () => {
                   v-model="form.line_2"
                   :label="$t('Apartment, suite, etc…')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -623,7 +609,6 @@ const destroy = () => {
                   v-model="form.city"
                   :label="$t('City')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"
@@ -637,7 +622,6 @@ const destroy = () => {
                   v-model="form.province"
                   :label="$t('Province')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
@@ -648,7 +632,6 @@ const destroy = () => {
                   v-model="form.postal_code"
                   :label="$t('Postal code')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"
@@ -659,7 +642,6 @@ const destroy = () => {
                   v-model="form.country"
                   :label="$t('Country')"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'w-full'"
                   :required="false"
                   :autocomplete="false"

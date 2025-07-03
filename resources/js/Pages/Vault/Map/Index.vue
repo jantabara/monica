@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 import { VMap, VMapMarker, VMapPinIcon, VMapOsmTileLayer } from 'vue-map-ui';
 import Layout from '@/Layouts/Layout.vue';
 import Avatar from '@/Shared/Avatar.vue';
@@ -8,13 +8,16 @@ defineProps({
   data: Object,
 });
 
-const editedContact = ref(undefined);
+const handleClick = (url) => {
+  console.log(url);
+  router.visit(url);
+};
 </script>
 
 <template>
   <layout title="Map" :inside-vault="true" :layout-data="layoutData">
     <main class="relative sm:mt-19">
-      <div
+      <!-- <div
         v-if="!!editedContact"
         class="relative z-1000"
         aria-labelledby="drawer-title"
@@ -59,13 +62,13 @@ const editedContact = ref(undefined);
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <VMap style="height: 100vh" zoom="8" :center="[50.073658, 14.41854]">
         <VMapOsmTileLayer />
         <VMapMarker
           v-for="contact in data.contacts"
-          @click="editedContact = contact"
+          @click="handleClick(contact.url.show)"
           :latlng="[contact.addresses[0].latitude, contact.addresses[0].longitude]"
           :title="contact.name"
           :key="contact.id">

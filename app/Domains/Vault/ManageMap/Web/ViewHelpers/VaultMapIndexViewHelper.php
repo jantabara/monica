@@ -31,12 +31,12 @@ class VaultMapIndexViewHelper
                 'name' => $contact->name,
                 'addresses' => $contact->addresses,
                 'avatar' => $contact->avatar,
-                // 'url' => [
-                //   'show' => route('contact.show', [
-                //     'vault' => $vault->id,
-                //     'contact' => $contact->id,
-                //   ]),
-                // ],
+                'url' => [
+                    'show' => route('contact.show', [
+                        'vault' => $vault->id,
+                        'contact' => $contact->id,
+                    ]),
+                ],
             ]);
         }
 
