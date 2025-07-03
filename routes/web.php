@@ -110,6 +110,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricContactController;
 use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricController;
+use App\Domains\Vault\ManageMap\Web\Controllers\VaultMapController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -199,6 +200,9 @@ Route::middleware([
         Route::middleware('can:vault-viewer,vault')->prefix('{vault}')->group(function () {
             // update dashboard's default tab
             Route::put('defaultTab', [VaultDefaultTabOnDashboardController::class, 'update'])->name('vault.default_tab.update');
+
+            // map
+            Route::get('map', [VaultMapController::class, 'index'])->name('vault.map.index');
 
             // calendar
             Route::get('calendar', [VaultCalendarController::class, 'index'])->name('vault.calendar.index');

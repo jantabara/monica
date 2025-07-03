@@ -36,12 +36,16 @@ class VaultIndexViewHelper
                     'show_companies_tab' => $vault->show_companies_tab,
                     'show_reports_tab' => $vault->show_reports_tab,
                     'show_calendar_tab' => $vault->show_calendar_tab,
+                    'show_map_tab' => $vault->show_map_tab,
                 ],
                 'url' => [
                     'dashboard' => route('vault.show', [
                         'vault' => $vault->id,
                     ]),
                     'contacts' => route('contact.index', [
+                        'vault' => $vault->id,
+                    ]),
+                    'map' => route('vault.map.index', [
                         'vault' => $vault->id,
                     ]),
                     'calendar' => route('vault.calendar.index', [

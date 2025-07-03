@@ -49,6 +49,7 @@ class Vault extends Model
         'show_journal_tab',
         'show_companies_tab',
         'show_calendar_tab',
+        'show_map_tab',
     ];
 
     /**
@@ -64,6 +65,7 @@ class Vault extends Model
         'show_journal_tab' => 'boolean',
         'show_companies_tab' => 'boolean',
         'show_reports_tab' => 'boolean',
+        'show_map_tab' => 'boolean',
     ];
 
     /**

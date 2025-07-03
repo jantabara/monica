@@ -211,6 +211,11 @@ const toggleStyle = () => {
               title: $t('Contacts'),
               selected: $page.component.startsWith('Vault/Contact'),
             },
+            {
+              url: layoutData.vault.url.map,
+              title: $t('Map'),
+              selected: $page.component.startsWith('Vault/Map'),
+            },
             layoutData.vault.visibility.show_calendar_tab
               ? {
                   url: layoutData.vault.url.calendar,

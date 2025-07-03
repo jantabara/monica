@@ -64,5 +64,10 @@
       "vendor/bin/pint"
     ]
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "v-tooltip": "^2.1.3",
+    "vue-map-ui": "^0.0.18"
+  }
 }

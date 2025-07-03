@@ -1,5 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
+import 'leaflet/dist/leaflet.css';
+import 'vue-map-ui/dist/style.css';
+import 'vue-map-ui/dist/theme-all.css';
 
 import { createSSRApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
