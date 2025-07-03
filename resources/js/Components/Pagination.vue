@@ -38,7 +38,7 @@ const linkClasses =
       </Link>
 
       <Link
-        v-if="items.lastPage > 1"
+        v-if="items.lastPage !== items.currentPage"
         :href="items.nextPageUrl"
         preserve-scroll
         :class="[

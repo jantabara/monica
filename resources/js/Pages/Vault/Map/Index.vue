@@ -64,7 +64,7 @@ const handleClick = (url) => {
         </div>
       </div> -->
 
-      <VMap style="height: 100vh" zoom="8" :center="[50.073658, 14.41854]">
+      <VMap style="height: 80vh" zoom="8" :center="[50.073658, 14.41854]">
         <VMapOsmTileLayer />
         <VMapMarker
           v-for="contact in data.contacts"

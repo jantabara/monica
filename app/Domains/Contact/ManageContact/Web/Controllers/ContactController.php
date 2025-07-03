@@ -31,6 +31,7 @@ class ContactController extends Controller
             ->where('listed', true);
 
         $column_to_order = preg_replace('/^%([a-z_]+)%.*$/', '$1', Auth::user()->name_order);
+        // $primary_column_to_order = "last_name";
 
         switch (Auth::user()->contact_sort_order) {
             case User::CONTACT_SORT_ORDER_ASC:
